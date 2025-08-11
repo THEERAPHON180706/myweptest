@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>roll 2</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Box-Sizing */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* CSS RESET/Base Styles */
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header และ Banner */
+        h1 {
+            text-align: center;
+            color: #f0f0f0;
+            font-size: 38px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+        }
+        .promo-banner {
+            background-color: #0d0d0d;
+            color: #ff8c00;
+            padding: 18px;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-bottom: 35px;
+            border: 1px solid #333333;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            width: 95%;
+            max-width: 700px;
+        }
+        .button-menu {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .button-menu a {
+            background-color: #000;
+            color: #f0f0f0;
+            font-size: 17px;
+            padding: 14px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            text-transform: uppercase;
+            font-weight: 600;
+            border: 1px solid #222222;
+        }
+        .button-menu a:hover {
+            background-color: #ff8c00;
+            color: #0d0d0d;
+            border-color: #ff4e02;
+        }
+        /* ปุ่มกลับหน้าหลัก - ปรับให้เหมือนปุ่มเมนู */
+        .main-back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background-color: #000;
+            color: #f0f0f0;
+            font-size: 17px;
+            padding: 14px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            text-transform: uppercase;
+            font-weight: 600;
+            border: 1px solid #222222;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .main-back-button:hover {
+            background-color: #ff8c00;
+            color: #0d0d0d;
+            border-color: #ff4e02;
+        }
+
+        /* ส่วนแสดงผลการเปิดกล่อง */
+        .case-container {
+            position: relative;
+            overflow: hidden;
+            width: 95%;
+            max-width: 700px;
+            margin-top: 40px;
+            background: #2b2b2b;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.7);
+            height: 140px;
+        }
+        .marker {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            background: goldenrod;
+            z-index: 2;
+        }
+        .items {
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .item {
+            width: 120px;
+            height: 120px;
+            margin: 10px 6px;
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 4px solid #000;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: border-color 0.2s;
+        }
+        .item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .item:hover img {
+            opacity: 1;
+        }
+
+        /* ปุ่มเปิดกล่อง */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .roll-button {
+            padding: 12px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            background: #ff8c00;
+            color: black;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .roll-button:hover {
+            background: #e67d00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .roll-button:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Recent Drops */
+        .recent-drops-container {
+            margin-top: 30px;
+            width: 95%;
+            max-width: 700px;
+            background: #222222;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+        .recent-drops-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 15px;
+            border-bottom: 2px solid #ff8c00;
+            user-select: none;
+        }
+        .recent-drops {
+            padding: 15px;
+            display: none;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .drop-item {
+            background: #3a3a3a;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-left: 5px solid;
+        }
+        .drop-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        /* Popup Modal */
+        .reward-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            text-align: center;
+            padding: 20px;
+        }
+        .reward-card {
+            position: relative;
+            background: #222;
+            padding: 30px;
+            border-radius: 20px;
+            border: 5px solid #fff;
+            max-width: 350px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.4);
+            animation: popup 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center;
+        }
+        @keyframes popup {
+            from { transform: scale(0.6); opacity:0; }
+            to { transform: scale(1); opacity:1; }
+        }
+        .reward-card img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+        .reward-card h2 {
+            margin-top: 20px;
+            color: #fff;
+            text-shadow: 0 0 5px #000;
+        }
+        .multiple-rewards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            background: #2b2b2b;
+            padding: 20px;
+            border-radius: 15px;
+            border: 4px solid #ff0000;
+            box-shadow: 0 0 20px rgba(0,0,0,0.7);
+        }
+        .multiple-rewards-container .item {
+            width: 100px;
+            height: 100px;
+            margin: 0;
+            transition: none;
+        }
+        .multiple-rewards-container .item img {
+            opacity: 1;
+        }
+
+        .modal-close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4a4a;
+            color: #fff;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 18px;
+            transition: background-color 0.2s;
+        }
+        .modal-close-button:hover {
+            background: #cc3c3c;
+        }
+
+        /* Responsive สำหรับมือถือ */
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+            .button-group {
+                flex-direction: column;
+                width: 90%;
+            }
+            .roll-button {
+                width: 100%;
+            }
+            .main-back-button {
+                padding: 10px 18px;
+            }
+            h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="2.html" class="main-back-button"><i class="fas fa-arrow-left"></i> กลับ</a>
+
+    <h1><i class="fas fa-box-open"></i> กล่องสุ่ม Standard</h1>
+
+    <div class="promo-banner">
+        🔥 โปรโมชั่นสุดพิเศษ! เปิดกันเดือดๆ ไอเทมแรร์เพียบ! รีบจัดก่อนของหมด! 🔥
+    </div>
+
+    <div class="case-container">
+        <div class="marker"></div>
+        <div class="items" id="items"></div>
+    </div>
+
+    <div class="button-group">
+        <button class="roll-button" onclick="rollCaseSingle()">
+            <i class="fas fa-dice"></i>Roll
+        </button>
+        <button class="roll-button" onclick="rollCaseMultiple(10)">
+            <i class="fas fa-dice"></i>SuperRool
+        </button>
+    </div>
+
+    <div class="recent-drops-container">
+        <div class="recent-drops-header" onclick="toggleDrops()">
+            <span><i class="fas fa-history"></i> รางวัลที่ได้รับล่าสุด</span>
+            <span id="toggleIcon"><i class="fas fa-chevron-down"></i></span>
+        </div>
+        <div class="recent-drops" id="recentDrops"></div>
+    </div>
+
+    <div class="reward-modal" id="rewardModal">
+        <div class="reward-card" id="rewardCard">
+            <button class="modal-close-button" onclick="closeModal()">✕</button>
+            <img src="" alt="">
+            <h2 id="rewardName"></h2>
+        </div>
+        <div class="multiple-rewards-container" id="multipleRewardsContainer">
+            <button class="modal-close-button" onclick="closeModal()">✕</button>
+        </div>
+    </div>
+
+    <audio id="rollSound" src="sound/CS GO Case Knife Opening Sound Effect.mp3"></audio>
+    <audio id="stopSound" src="https://cdn.pixabay.com/audio/2022/03/15/pop-sound-35222.mp3"></audio>
+    <audio id="rewardSound" src="https://cdn.pixabay.com/audio/2022/03/15/pop-sound-35222.mp3"></audio>
+
+    <script>
+        const itemsEl = document.getElementById('items');
+        const recentEl = document.getElementById('recentDrops');
+        const rollSound = document.getElementById('rollSound');
+        const stopSound = document.getElementById('stopSound');
+        const rewardSound = document.getElementById('rewardSound');
+
+        const modal = document.getElementById('rewardModal');
+        const singleRewardCard = document.getElementById('rewardCard');
+        const multipleRewardsContainer = document.getElementById('multipleRewardsContainer');
+        const rewardImg = document.querySelector('#rewardCard img');
+        const rewardName = document.getElementById('rewardName');
+
+        // ข้อมูลรางวัลเริ่มต้น - แก้ไขค่า chance ที่นี่ได้โดยตรง
+        const items = [
+            { name: "เกลือ", img: "photo/pngegg.png", chance: 95, color: "#aaa" },
+            { name: "เหรียญ", img: "photo/—Pngtree—vector gold medal_3232692.png", chance: 4, color: "#00f" },
+            { name: "แมงปอทอง", img: "photo/Dragonfly-1024x1024.webp", chance: 0.9, color: "#a0f" },
+            { name: "แรคคูน", img: "photo/noFilter.webp", chance: 0.1, color: "#ff0" },
+        ];
+
+        let rolling = false;
+        let finalReward = null;
+        let stopPosition = 0;
+
+        // ฟังก์ชันสุ่มรางวัลแบบถ่วงน้ำหนัก
+        function weightedRandom() {
+            const total = items.reduce((sum, i) => sum + i.chance, 0);
+            if (total === 0) return items[0];
+
+            let rnd = Math.random() * total;
+            for (let item of items) {
+                if (rnd < item.chance) return item;
+                rnd -= item.chance;
+            }
+            return items[0];
+        }
+
+        // สร้าง Item สำหรับการหมุน
+        function generateItems(loopCount = 50) {
+            itemsEl.innerHTML = "";
+            finalReward = weightedRandom();
+
+            const totalSlots = loopCount;
+            const finalIndex = Math.floor(totalSlots * 0.7);
+
+            for (let i = 0; i < totalSlots; i++) {
+                let item = (i === finalIndex) ? finalReward : weightedRandom();
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.style.borderColor = item.color;
+                div.innerHTML = `<img src="${item.img}" alt="${item.name}">`;
+                div.dataset.name = item.name;
+                div.dataset.img = item.img;
+                div.dataset.color = item.color;
+                itemsEl.appendChild(div);
+            }
+
+            const firstItem = itemsEl.querySelector('.item');
+            const itemWidth = firstItem.getBoundingClientRect().width + 12;
+            const containerWidth = document.querySelector('.case-container').offsetWidth;
+            const centerOffset = containerWidth / 2 - itemWidth / 2;
+            stopPosition = finalIndex * itemWidth - centerOffset;
+        }
+
+        // ฟังก์ชันการเปิดกล่องครั้งเดียว
+        function rollCaseSingle() {
+            if (rolling) return;
+            rolling = true;
+            
+            // เริ่มเล่นเสียงหมุน
+            rollSound.currentTime = 0;
+            rollSound.play();
+
+            generateItems();
+
+            let pos = 0;
+            let duration = 4000;
+            let startTime = null;
+
+            function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+            function animate(time) {
+                if (!startTime) startTime = time;
+                const elapsed = time - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                pos = stopPosition * easeOutCubic(progress);
+                itemsEl.style.transform = `translateX(${-pos}px)`;
+
+                if (progress < 1) {
+                    // เล่นเสียงหยุดก่อนการหมุนจบ 1 วินาที
+                    if (elapsed > duration - 1000) {
+                        rollSound.pause();
+                        stopSound.play();
+                    }
+                    requestAnimationFrame(animate);
+                } else {
+                    addRecentDrop(finalReward);
+                    showModal(finalReward);
+                    rolling = false;
+                    // เมื่อการหมุนจบ ให้เล่นเสียงรางวัล
+                    rewardSound.play();
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // ฟังก์ชันการเปิดกล่องหลายครั้ง
+        function rollCaseMultiple(count) {
+            if (rolling) return;
+            rolling = true;
+            
+            // เริ่มเล่นเสียงหมุน
+            rollSound.currentTime = 0;
+            rollSound.play();
+
+            const rewards = [];
+            for (let i = 0; i < count; i++) {
+                const reward = weightedRandom();
+                rewards.push(reward);
+                addRecentDrop(reward);
+            }
+            
+            // หยุดเสียงหมุน
+            rollSound.pause();
+            // เล่นเสียงรางวัล
+            rewardSound.play();
+
+            showMultipleRewardsModal(rewards);
+            rolling = false;
+        }
+
+        // เพิ่มรางวัลลงในส่วน Recent Drops
+        function addRecentDrop(item) {
+            const div = document.createElement('div');
+            div.className = 'drop-item';
+            div.style.borderLeftColor = item.color;
+            div.innerHTML = `<img src="${item.img}"><span>คุณได้รับ: ${item.name}</span>`;
+            recentEl.prepend(div);
+        }
+
+        // แสดง Modal สำหรับรางวัลเดียว
+        function showModal(item) {
+            multipleRewardsContainer.style.display = 'none';
+            singleRewardCard.style.display = 'block';
+            rewardImg.src = item.img;
+            rewardName.textContent = `คุณได้รับ: ${item.name}`;
+            document.getElementById('rewardCard').style.borderColor = item.color;
+            modal.style.display = 'flex';
+        }
+
+        // แสดง Modal สำหรับหลายรางวัล
+        function showMultipleRewardsModal(rewards) {
+            singleRewardCard.style.display = 'none';
+            multipleRewardsContainer.style.display = 'grid';
+            multipleRewardsContainer.innerHTML = '<button class="modal-close-button" onclick="closeModal()">✕</button>';
+
+            rewards.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.style.borderColor = item.color;
+                div.innerHTML = `<img src="${item.img}" alt="${item.name}">`;
+                multipleRewardsContainer.appendChild(div);
+            });
+
+            modal.style.display = 'flex';
+        }
+
+        // ปิด Modal
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // เปิด/ปิดส่วน Recent Drops
+        function toggleDrops() {
+            const drops = document.getElementById('recentDrops');
+            const icon = document.getElementById('toggleIcon').querySelector('i');
+            if (drops.style.display === 'none' || drops.style.display === '') {
+                drops.style.display = 'block';
+                icon.className = 'fas fa-chevron-up';
+            } else {
+                drops.style.display = 'none';
+                icon.className = 'fas fa-chevron-down';
+            }
+        }
+    </script>
+</body>
+</html>

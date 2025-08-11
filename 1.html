@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome MOMO Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Box-Sizing เพื่อจัดการ Padding/Border ไม่ให้ล้น */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* CSS RESET/Base Styles */
+        body {
+            margin: 0;
+            padding: 30px; /* คง padding ไว้เพื่อไม่ให้เนื้อหาชิดขอบ */
+            font-family: 'Montserrat', sans-serif; /* ใช้ฟอนต์ Montserrat */
+            background-color: #1a1a1a; /* เทาเข้มเกือบดำ */
+            color: #e0e0e0; /* สีข้อความหลักเป็นเทาอ่อน */
+            line-height: 1.6; /* ปรับระยะห่างบรรทัดให้อ่านง่าย */
+            scroll-behavior: smooth; /* เพิ่ม Smooth Scroll */
+        }
+
+        /* ส่วนหัวเรื่อง MOMO SHOP */
+        .text-head {
+            text-align: center;
+            color: #f0f0f0; /* สีขาวอมเทา */
+            font-size: 38px; /* ขนาดใหญ่ขึ้น */
+            margin-bottom: 25px;
+            text-transform: uppercase; /* ตัวพิมพ์ใหญ่ทั้งหมด */
+            letter-spacing: 3px; /* เพิ่มระยะห่างตัวอักษร */
+            font-weight: 700; /* ตัวหนามาก */
+        }
+
+        /* แบนเนอร์โปรโมชั่น */
+        .promo-banner {
+            background-color: #0d0d0d; /* ดำสนิท */
+            color: #ff8c00; /* สีส้ม accent */
+            padding: 18px;
+            text-align: center;
+            border-radius: 8px; /* มุมโค้งเล็กน้อย */
+            font-weight: 600;
+            margin-bottom: 35px;
+            border: 1px solid #333333; /* ขอบเทาเข้ม */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* เงาเข้ม */
+        }
+
+        /* กลุ่มปุ่มเมนู */
+        .button-menu {
+            display: flex;
+            justify-content: center;
+            gap: 15px; /* เพิ่มระยะห่างระหว่างปุ่ม */
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .button-menu a {
+            background-color: #000; /* ดำสนิท */
+            color: #f0f0f0; /* ขาวอมเทา */
+            font-size: 17px;
+            padding: 14px 28px; /* ขนาดใหญ่ขึ้น */
+            border-radius: 6px; /* มุมโค้ง */
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            text-transform: uppercase; /* ตัวพิมพ์ใหญ่ทั้งหมด */
+            font-weight: 600;
+            border: 1px solid #222222; /* ขอบเล็กน้อย */
+        }
+
+        .button-menu a:hover {
+            background-color: #ff8c00; /* ส้มเมื่อ hover */
+            color: #0d0d0d; /* ข้อความดำเมื่อ hover */
+            border-color: #ff4e02; /* ขอบสีส้มเมื่อ hover */
+        }
+
+        /* Responsive สำหรับมือถือ */
+        @media (max-width: 600px) {
+            body {
+                padding: 15px; /* ลด padding สำหรับมือถือ */
+            }
+            .button-menu {
+                flex-direction: column;
+                align-items: center;
+            }
+            .button-menu a {
+                width: 90%; /* เต็มความกว้างมากขึ้น */
+                text-align: center;
+            }
+            .text-head {
+                font-size: 30px; /* ลดขนาด font สำหรับมือถือ */
+            }
+        }
+
+        /* ส่วนสินค้าแนะนำ */
+        .product-recommendation {
+            padding: 30px 20px;
+            background-color: #222222; /* เทาเข้ม */
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* เงาเข้มขึ้น */
+        }
+        .product-recommendation h2 {
+            text-align: center;
+            color: #ff8c00; /* สีส้ม accent */
+            font-size: 28px;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .product-list {
+            display: flex;
+            gap: 25px; /* เพิ่มระยะห่างระหว่างการ์ด */
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .product-card {
+            border: 1px solid #444444; /* ขอบเทาเข้มเริ่มต้น */
+            padding: 20px;
+            border-radius: 8px;
+            width: calc(33.33% - 25px); /* แสดง 3 ชิ้นต่อแถวบน Desktop */
+            min-width: 250px; /* การ์ดไม่หดเล็กกว่านี้ */
+            background-color: #0d0d0d; /* ดำสนิท */
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3); /* เงา */
+            color: #f0f0f0; /* ข้อความในการ์ดเป็นขาวอมเทา */
+            
+            /* *** ส่วนสำคัญของอนิเมชันเด้งขึ้นเมื่อเมาส์ชี้ และการแสดงผลเริ่มต้น *** */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+            margin-bottom: 25px; /* เพิ่มระยะห่างด้านล่างของการ์ด */
+            
+            /* สถานะเริ่มต้นของ fadeUp animation */
+            opacity: 0; /* ซ่อนไว้ตอนแรก */
+            transform: translateY(30px); /* เริ่มต้นจากด้านล่าง */
+            animation: fadeUp 0.8s ease-out forwards; /* ใช้ forwards เพื่อคงสถานะสุดท้าย (opacity: 1, translateY(0)) */
+        }
+        .product-card:hover {
+            transform: scale(1.03) translateY(-8px); /* ขยาย 3% และเด้งขึ้น 8px */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* เงาเข้มขึ้น */
+            border-color: #00aaff; /* เปลี่ยนสีขอบเป็นสีฟ้า */
+        }
+        .product-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #555555; /* ขอบรูปภาพ */
+        }
+        .product-card h3 {
+            color: #ff8c00; /* ชื่อสินค้าเป็นสีส้ม */
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 22px;
+            text-transform: uppercase;
+        }
+        .product-card p {
+            color: #a0a0a0; /* รายละเอียดเป็นเทากลาง */
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #ff8c00; /* ปุ่มเป็นสีส้ม */
+            color: #ffffff; /* ข้อความปุ่มเป็นสีขาว */
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #e67d00; /* ส้มเข้มขึ้นเมื่อ hover */
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Delay animation for each card */
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+
+        /* Responsive สำหรับ Product Cards */
+        @media screen and (max-width: 1024px) {
+            .product-card {
+                width: calc(50% - 25px); /* แสดง 2 ชิ้นต่อแถวบน tablet */
+            }
+        }
+        @media screen and (max-width: 768px) {
+            .product-card {
+                width: 100%; /* แสดง 1 ชิ้นต่อแถวบนมือถือ */
+                max-width: 300px; /* จำกัดความกว้างสูงสุด */
+                margin-left: auto; /* จัดกึ่งกลางบนมือถือ */
+                margin-right: auto; /* จัดกึ่งกลางบนมือถือ */
+            }
+            .product-list {
+                gap: 15px; /* ลด gap บนมือถือ */
+                justify-content: center; /* ให้การ์ดอยู่ตรงกลาง */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="text-head">
+        <h1>MOMO SHOP</h1>
+    </div>
+
+    <div class="promo-banner">
+        🔥 โปรโมชั่นสุดพิเศษ! เดือน7เปิดกันเดือดๆ ไอเทมแรร์เพียบ! รีบจัดก่อนของหมด! 🔥
+    </div>
+
+    <div class="button-menu">
+        <a href="5.html">บัญชีผู้ใช้</a>
+        <a href="2.html">ร้านค้า</a>
+        <a href="4.html">เติมเงิน</a>
+        <a href="3.html">ติดต่อแอดมิน</a>
+        <a href="">สินค้าแนะนำ</a>
+    </div>
+
+    <section class="product-recommendation" id="product-recommendation-section">
+        <h2>สินค้าแนะนำสำหรับคุณ</h2>
+        <div class="product-list">
+            <div class="product-card">
+                <img src="photo/111111117.png" alt="กล่องสุ่ม Standard">
+                <h3>Standard Crate</h3>
+                <p>เปิดกล่องเพื่อลุ้นไอเทมทั่วไปและมีโอกาสได้ไอเทมหายาก!</p>
+                <a href="luck1.html" class="btn">ดูรายละเอียด</a>
+            </div>
+
+            <div class="product-card">
+                <img src="photo/111111117.png" alt="กล่องสุ่ม Premium">
+                <h3>Premium Crate</h3>
+                <p>เพิ่มโอกาสได้ไอเทมระดับสูง เช่น มีดและสกินปืนหายาก!</p>
+                <a href="luck2.html" class="btn">ดูรายละเอียด</a>
+            </div>
+
+            <div class="product-card">
+                <img src="photo/111111117.png" alt="กล่องสุ่ม Elite">
+                <h3>Elite Crate</h3>
+                <p>กล่องสุ่มที่ดีที่สุด! รับประกันไอเทมแรร์ระดับตำนาน!</p>
+                <a href="luck3.html" class="btn">ดูรายละเอียด</a>
+            </div>
+
+            <div class="product-card">
+                <img src="photo/111111117.png" alt="กล่องสุ่ม Knife">
+                <h3>Knife Crate</h3>
+                <p>ลุ้นรับมีดหายากทุกชนิด! โอกาสทองของนักสะสม!</p>
+                <a href="#" class="btn">ดูรายละเอียด</a>
+            </div>
+
+            <div class="product-card">
+                <img src="photo/111111117.png" alt="กล่องสุ่ม Glove">
+                <h3>Glove Crate</h3>
+                <p>เพิ่มความเท่ให้กับตัวละครของคุณด้วยถุงมือสุดลิมิเต็ด!</p>
+                <a href="#" class="btn">ดูรายละเอียด</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

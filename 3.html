@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หน้าติดต่อ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #1A1A1A; /* สีพื้นหลังหลักเข้ม */
+            --card-bg: #2F2F2F; /* สีพื้นหลังกล่อง/การ์ด */
+            --text-main: #BBBBBB; /* สีข้อความหลัก */
+            --text-secondary: #888888; /* สีข้อความรอง */
+            --white-text: #FFFFFF; /* สีข้อความขาว */
+            --accent-color: #FF8C00; /* สีเน้น (ส้ม) */
+            --accent-hover: #FFA500; /* สีเน้นเมื่อ Hover */
+            --button-facebook: #1877F2;
+            --button-facebook-hover: #166FE5;
+            --button-line: #08a518;
+            --button-line-hover: #06c452;
+            --close-button-color: #BBBBBB; /* สีสำหรับปุ่มปิด */
+            --close-button-hover-color: #FF0000; /* สีแดงเมื่อ hover */
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .container {
+            max-width: 550px;
+            width: 100%;
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        /* สไตล์สำหรับปุ่มกากบาท (Close Button) */
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--close-button-color);
+            font-size: 1.8em;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            line-height: 1;
+            z-index: 10;
+        }
+
+        .close-button:hover {
+            color: var(--close-button-hover-color);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--white-text);
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-bottom: 2px solid var(--accent-color); /* ใช้สีเน้น */
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+
+        p {
+            font-size: 1.05em;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: var(--text-main);
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--white-text);
+        }
+
+        .social-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* สีสำหรับปุ่ม Facebook */
+        .fb-button {
+            background-color: var(--button-facebook);
+        }
+
+        .fb-button:hover {
+            background-color: var(--button-facebook-hover);
+        }
+
+        /* สีสำหรับปุ่ม Line */
+        .line-button {
+            background-color: var(--button-line);
+        }
+
+        .line-button:hover {
+            background-color: var(--button-line-hover);
+        }
+        
+        .contact-info {
+            margin-top: 30px;
+            font-size: 1em;
+            color: var(--text-secondary); /* ใช้สีข้อความรอง */
+            line-height: 1.7;
+        }
+
+        .contact-info strong {
+            color: var(--text-main);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+                margin: 15px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            p {
+                font-size: 1em;
+            }
+
+            .social-button {
+                font-size: 1em;
+                padding: 12px 25px;
+            }
+
+            .close-button {
+                top: 10px;
+                right: 10px;
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="1.html" class="close-button" title="กลับหน้าหลัก/ปิด">
+            &times; </a>
+
+        <h1>ติดต่อเรา</h1>
+        <p>หากมีคำถาม ข้อเสนอแนะ หรือต้องการความช่วยเหลือ โปรดติดต่อเราผ่านช่องทางด้านล่างนี้:</p>
+        
+        <div class="button-group">
+            <a href="https://www.facebook.com/your-actual-facebook-page" target="_blank" class="social-button fb-button">
+                ไปที่ Facebook Fanpage
+            </a>
+            <a href="https://line.me/ti/p/@your-line-id" target="_blank" class="social-button line-button">
+                เพิ่มเพื่อนใน Line
+            </a>
+        </div>
+
+        <div class="contact-info">
+            <p>
+                หรือติดต่อเราโดยตรง:<br>
+                <strong>อีเมล:</strong> your-email@example.com <br>
+                <strong>โทร:</strong> 0XXXXXXXXX
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MOMO CS:GO Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Box-Sizing เพื่อจัดการ Padding/Border ไม่ให้ล้น */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: 'Montserrat', sans-serif; /* ใช้ฟอนต์ Montserrat */
+            background-color: #1a1a1a; /* เทาเข้มเกือบดำ - แนว CS:GO */
+            color: #e0e0e0; /* สีข้อความหลักเป็นเทาอ่อน */
+            line-height: 1.6;
+            scroll-behavior: smooth; /* เพื่อ Smooth Scroll */
+        }
+
+        /* หัวข้อ */
+        .text-head {
+            text-align: center;
+            color: #f0f0f0; /* ขาวอมเทา */
+            font-size: 38px; /* ขนาดใหญ่ขึ้น */
+            margin-bottom: 25px;
+            text-transform: uppercase; /* ตัวพิมพ์ใหญ่ทั้งหมด */
+            letter-spacing: 3px; /* เพิ่มระยะห่างตัวอักษร */
+            font-weight: 700; /* ตัวหนามาก */
+        }
+
+        /* แบนเนอร์โปรโมชั่น */
+        .promo-banner {
+            background-color: #0d0d0d; /* ดำสนิท */
+            color: #ff8c00; /* สีส้ม accent */
+            padding: 18px;
+            text-align: center;
+            border-radius: 8px; /* มุมโค้งเล็กน้อย */
+            font-weight: 600;
+            margin-bottom: 35px;
+            border: 1px solid #333333; /* ขอบเทาเข้ม */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* เงาเข้ม */
+        }
+
+        /* เมนูปุ่ม (Navigation) */
+        .main-nav {
+            display: flex;
+            justify-content: center; /* จัดกลาง */
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap; /* ให้ขึ้นบรรทัดใหม่ได้บนจอเล็ก */
+        }
+
+        .main-nav a {
+            background-color: #000; /* ดำสนิท */
+            color: #f0f0f0; /* ขาวอมเทา */
+            font-size: 17px;
+            padding: 14px 28px; /* ขนาดใหญ่ขึ้น */
+            border-radius: 6px; /* มุมโค้ง */
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            text-transform: uppercase; /* ตัวพิมพ์ใหญ่ทั้งหมด */
+            font-weight: 600;
+            border: 1px solid #222222; /* ขอบเล็กน้อย */
+        }
+
+        .main-nav a:hover {
+            background-color: #ff8c00; /* ส้มเมื่อ hover */
+            color: #0d0d0d; /* ข้อความดำเมื่อ hover */
+            border-color: #ff8c00; /* ขอบสีส้มเมื่อ hover */
+        }
+
+        /* สไตล์สำหรับเส้นแบ่งใหม่ */
+        .divider {
+            border: none;
+            height: 1px; /* ความหนาของเส้น */
+            background-color: #444; /* สีเทาเข้ม */
+            margin: 50px auto; /* ระยะห่างบน-ล่าง และจัดกึ่งกลาง */
+            width: 80%; /* ความกว้างของเส้น */
+            max-width: 800px; /* จำกัดความกว้างสูงสุด */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* เพิ่มเงาให้ดูมีมิติ */
+        }
+
+        /* การ์ดสินค้า */
+        .container {
+            display: flex;
+            gap: 30px; /* ระยะห่างระหว่างการ์ด */
+            flex-wrap: wrap;
+            max-width: 1200px; /* เพิ่ม max-width เพื่อรองรับการ์ด 3-4 ใบ */
+            justify-content: center; /* จัดกลางการ์ดใน container */
+            margin: 0 auto;
+            padding: 20px 0; /* เพิ่ม padding บน-ล่าง ให้ container */
+            background-color: #222222; /* เทาเข้มสำหรับส่วน container */
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* เงาเข้มขึ้น */
+        }
+
+        .card {
+            position: relative;
+            width: 300px; /* ขนาดการ์ดมาตรฐาน */
+            height: 400px; /* ความสูงของการ์ด */
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            cursor: pointer;
+            background: #0d0d0d; /* ดำสนิท */
+            border: 1px solid #444444; /* ขอบเริ่มต้นเป็นเทาเข้ม */
+            
+            /* อนิเมชันเด้งขึ้นและขอบสีฟ้าเมื่อเมาส์ชี้ */
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            flex-shrink: 0;
+            margin-bottom: 30px; /* ระยะห่างด้านล่างระหว่างแถวของการ์ด */
+
+            /* อนิเมชัน FadeUp เมื่อโหลดหน้า */
+            opacity: 0; /* ซ่อนไว้ตอนแรก */
+            transform: translateY(30px); /* เริ่มต้นจากด้านล่าง */
+            animation: fadeUp 0.8s ease-out forwards; /* ใช้ forwards เพื่อคงสถานะสุดท้าย */
+        }
+
+        .card:hover {
+            transform: scale(1.03) translateY(-8px); /* ขยาย 3% และเด้งขึ้น 8px */
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4); /* เงาเข้มขึ้น */
+            border-color: #00aaff; /* ขอบสีฟ้าเมื่อ hover */
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            border-radius: 15px;
+        }
+
+        .card:hover img {
+            transform: scale(1.1);
+        }
+
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(180deg, transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: height 0.4s ease;
+            border-radius: 0 0 15px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .card:hover .overlay {
+            height: 220px; /* Increased height to accommodate more text */
+        }
+
+        .overlay h2 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff8c00; /* ชื่อสินค้าเป็นสีส้ม */
+        }
+
+        /* รายละเอียดเพิ่มเติมที่ซ่อนอยู่ */
+        .full-description {
+            margin: 10px 0 0;
+            font-size: 13px;
+            line-height: 1.5;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.4s ease 0.2s, max-height 0.4s ease 0.2s;
+            color: #a0a0a0; /* รายละเอียดเป็นเทากลาง */
+        }
+
+        .card:hover .full-description {
+            opacity: 1;
+            max-height: 80px;
+        }
+
+        /* ปุ่มซื้อ */
+        .buy-button-container {
+            margin-top: 15px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            transition-delay: 0.2s; /* เพิ่ม delay ให้ปุ่มปรากฏช้ากว่ารายละเอียดเล็กน้อย */
+            text-align: center;
+        }
+
+        .card:hover .buy-button-container {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .buy-button {
+            display: inline-block;
+            background-color: #ff8c00; /* ปุ่มเป็นสีส้ม */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .buy-button:hover {
+            background-color: #e67d00; /* ส้มเข้มขึ้นเมื่อ hover */
+        }
+
+        /* Keyframes สำหรับอนิเมชันเปิดตัว */
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Delay animation for each card */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; } /* เพิ่มเผื่ออนาคตหากมีหลายใบ */
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .card {
+                width: calc(33.33% - 20px); /* 3 คอลัมน์ บนจอขนาดกลาง */
+            }
+        }
+
+        @media (max-width: 980px) {
+            .container {
+                justify-content: center;
+                gap: 20px; /* ลด gap เล็กน้อย */
+            }
+            .card {
+                width: calc(50% - 20px); /* แสดง 2 ชิ้นต่อแถวบน tablet */
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            .text-head {
+                font-size: 30px;
+            }
+            .promo-banner {
+                margin-bottom: 25px; /* ลดระยะห่างบนมือถือ */
+            }
+            .main-nav {
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 30px; /* ลดระยะห่างบนมือถือ */
+            }
+            .main-nav a {
+                width: 90%;
+                max-width: 300px;
+                text-align: center;
+                padding: 12px 0;
+            }
+            .container {
+                padding: 15px 0;
+            }
+            .card {
+                width: 90vw; /* กว้างเกือบเต็มจอ */
+                max-width: 350px; /* จำกัดความกว้างสูงสุด */
+                height: 380px; /* ปรับความสูงการ์ดสำหรับมือถือ */
+                margin-left: auto; /* จัดกึ่งกลางบนมือถือ */
+                margin-right: auto; /* จัดกึ่งกลางบนมือถือ */
+            }
+            .card:hover .overlay {
+                height: 200px; /* ปรับความสูง overlay สำหรับมือถือ */
+            }
+            /* สไตล์สำหรับเส้นแบ่งใหม่ */
+
+        }
+
+        /* สไตล์สำหรับเส้นแบ่งใหม่ */
+        .divider {
+            border: none;
+            height: 1px;
+            background-color: gold; /* บรรทัดนี้คือส่วนที่คุณต้องแก้ไข */
+            margin: 50px auto;
+            width: 80%;
+            max-width: 800px;
+         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="text-head">
+        <h1>MOMO STORE</h1>
+    </div>
+
+    <div class="promo-banner">
+        🔥 โปรโมชั่นสุดพิเศษ! เดือน7เปิดกันเดือดๆ ไอเทมแรร์เพียบ! รีบจัดก่อนของหมด! 🔥
+    </div>
+
+    <nav class="main-nav">
+        <a href="1.html">หน้าหลัก</a>
+        <a href="4.html">เติมเงิน</a>
+        <a href="3.html">ติดต่อแอดมิน</a>
+    </nav>
+
+    <div class="container" id="store-section">
+        <div class="card">
+            <img src="photo/Screenshot 2025-04-16 102506.png" alt="CS:GO Standard Crate" />
+            <div class="overlay">
+                <h2>กล่องสุ่ม Standard</h2>
+                <p class="full-description">
+                    เปิดกล่องเพื่อลุ้นไอเทมทั่วไปและมีโอกาสได้ไอเทมหายาก! เหมาะสำหรับผู้เริ่มต้น.
+                </p>
+                <div class="buy-button-container">
+                    <a href="luck1.html" class="buy-button">สุ่มเลย</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="photo/Screenshot 2025-04-16 102506.png" alt="CS:GO Premium Crate" />
+            <div class="overlay">
+                <h2>กล่องสุ่ม Premium</h2>
+                <p class="full-description">
+                    เพิ่มโอกาสได้ไอเทมระดับสูง เช่น มีดและสกินปืนหายาก! คุ้มค่าแก่การลงทุน.
+                </p>
+                <div class="buy-button-container">
+                    <a href="luck2.html" class="buy-button">สุ่มเลย</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="photo/Screenshot 2025-04-16 102506.png" alt="CS:GO Elite Crate" />
+            <div class="overlay">
+                <h2>กล่องสุ่ม Elite</h2>
+                <p class="full-description">
+                    กล่องสุ่มที่ดีที่สุด! รับประกันไอเทมแรร์ระดับตำนาน! โอกาสทองของนักสะสม.
+                </p>
+                <div class="buy-button-container">
+                    <a href="luck3.html" class="buy-button">สุ่มเลย</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider"> <div class="text-head" style="margin-top: 50px; font-size: 28px; margin-bottom: 25px;">
+        <h2>ไอเทมยอดนิยม</h2>
+    </div>
+
+    <div class="container" id="skin-section">
+        <div class="card">
+            <img src="" alt="แมวมูน" />
+            <div class="overlay">
+                <h2>แมวมูน</h2>
+                <p class="full-description">
+                    xxxxxxxxxxxxxxxxxxx
+                </p>
+                <div class="buy-button-container">
+                    <a href="buy_ak47.html" class="buy-button">ซื้อเลย</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="" alt="แมงปอทอง" />
+            <div class="overlay">
+                <h2>แมงปอทอง</h2>
+                <p class="full-description">
+                    xxxxxxxxxxxxxxxxxxxxxxxx
+                </p>
+                <div class="buy-button-container">
+                    <a href="buy_awp.html" class="buy-button">ซื้อเลย</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

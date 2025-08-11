@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ / สมัครสมาชิก</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --dark-bg: #1A1A1A;
+            --card-bg: #2F2F2F;
+            --text-main: #BBBBBB;
+            --text-secondary: #888888;
+            --white-text: #FFFFFF;
+            --accent-color: #FF8C00;
+            --accent-hover: #FFA500;
+            --input-bg: #4A4A4A;
+            --input-border: #666666;
+            --close-button-color: #BBBBBB;
+            --close-button-hover-color: #FF0000;
+            
+            /* Social Buttons */
+            --google-red: #DB4437;
+            --google-red-hover: #C23321;
+            --facebook-blue: #1877F2;
+            --facebook-blue-hover: #166FE5;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px; /* เพิ่ม padding โดยรวมสำหรับทุกขนาดหน้าจอ */
+            box-sizing: border-box;
+            position: relative;
+            overflow-x: hidden; /* ป้องกัน scrollbar แนวนอน */
+        }
+
+        .container {
+            max-width: 450px;
+            width: 100%; /* ทำให้ container ยืดหยุ่นตามความกว้าง */
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            transition: height 0.4s ease-in-out;
+            margin: auto; /* จัดกึ่งกลางในแนวนอนเพิ่มเติม */
+        }
+
+        /* ปุ่มกากบาท (Close Button) */
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--close-button-color);
+            font-size: 1.8em;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            line-height: 1;
+            z-index: 10;
+        }
+
+        .close-button:hover {
+            color: var(--close-button-hover-color);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--white-text);
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+
+        p {
+            font-size: 1.05em;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: var(--text-main);
+        }
+
+        .form-section {
+            display: none;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            width: calc(100% - 20px); /* ความกว้างเต็ม - padding ซ้ายขวา */
+            padding: 12px 10px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 5px;
+            color: var(--white-text);
+            font-size: 1em;
+            box-sizing: border-box; /* สำคัญ: ทำให้ padding ไม่ดันขนาดเกิน width */
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="password"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+        }
+
+        .main-button {
+            display: block;
+            background-color: var(--accent-color);
+            color: var(--white-text);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .main-button:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-login-separator {
+            margin: 25px 0;
+            color: var(--text-secondary);
+            position: relative;
+        }
+        .social-login-separator::before,
+        .social-login-separator::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background-color: var(--input-border);
+        }
+        .social-login-separator::before {
+            left: 0;
+        }
+        .social-login-separator::after {
+            right: 0;
+        }
+
+        .social-buttons-group {
+            display: flex;
+            flex-direction: column; /* ให้ปุ่มเรียงเป็นแนวตั้งเสมอ */
+            gap: 10px;
+        }
+
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--white-text);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-button i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .social-button.google {
+            background-color: var(--google-red);
+        }
+
+        .social-button.google:hover {
+            background-color: var(--google-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-button.facebook {
+            background-color: var(--facebook-blue);
+        }
+
+        .social-button.facebook:hover {
+            background-color: var(--facebook-blue-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-form-link {
+            display: block;
+            margin-top: 25px;
+            color: var(--text-secondary);
+            font-size: 0.95em;
+        }
+
+        .toggle-form-link a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-form-link a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        /* --- Media Queries for Responsiveness --- */
+
+        /* สำหรับหน้าจอขนาดเล็ก (Mobile) */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px; /* ลด padding รอบ body */
+            }
+
+            .container {
+                padding: 30px 25px; /* ลด padding ภายใน container */
+                border-radius: 6px; /* ปรับขอบโค้งมนเล็กน้อย */
+                max-width: 95%; /* ให้ container ยืดได้เกือบเต็มความกว้างจอเล็ก */
+                margin: 0 auto; /* ให้ container อยู่กึ่งกลาง */
+            }
+
+            h1 {
+                font-size: 1.8em; /* ลดขนาดหัวข้อ */
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+            }
+
+            p {
+                font-size: 0.95em; /* ลดขนาดข้อความ */
+                margin-bottom: 25px;
+            }
+
+            .form-group label {
+                font-size: 0.9em; /* ลดขนาด label */
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 10px; /* ลด padding ใน input */
+                font-size: 0.95em;
+            }
+
+            .main-button {
+                padding: 10px 20px; /* ลด padding ปุ่มหลัก */
+                font-size: 1em;
+            }
+
+            .social-login-separator {
+                margin: 20px 0; /* ลด margin ของเส้นคั่น */
+                font-size: 0.9em;
+            }
+            .social-login-separator::before,
+            .social-login-separator::after {
+                width: 35%; /* ปรับความยาวของเส้นคั่น */
+            }
+
+            .social-button {
+                padding: 10px 20px; /* ลด padding ปุ่ม Social */
+                font-size: 0.95em;
+            }
+
+            .social-button i {
+                margin-right: 8px; /* ลดระยะห่างไอคอน */
+                font-size: 1.1em;
+            }
+
+            .toggle-form-link {
+                margin-top: 20px;
+                font-size: 0.9em;
+            }
+
+            .close-button {
+                top: 10px;
+                right: 10px;
+                font-size: 1.5em; /* ลดขนาดปุ่มกากบาท */
+                padding: 3px 8px;
+            }
+        }
+
+        /* สำหรับหน้าจอที่เล็กมากๆ (เช่น iPhone 5/SE) */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 25px 20px;
+            }
+            h1 {
+                font-size: 1.6em;
+            }
+            p {
+                font-size: 0.9em;
+            }
+            .form-group input,
+            .form-group select,
+            .main-button,
+            .social-button {
+                font-size: 0.9em;
+                padding: 8px 15px;
+            }
+            .social-button i {
+                margin-right: 5px;
+                font-size: 1em;
+            }
+            .social-login-separator::before,
+            .social-login-separator::after {
+                width: 30%;
+            }
+            .close-button {
+                font-size: 1.3em;
+                top: 8px;
+                right: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="authContainer">
+        <a href="1.html" class="close-button" title="กลับหน้าหลัก/ปิด">
+            &times; </a>
+
+        <div id="loginForm" class="form-section active">
+            <h1>เข้าสู่ระบบ</h1>
+            <form action="process_login.php" method="POST">
+                <div class="form-group">
+                    <label for="login_username_email">ชื่อผู้ใช้ หรือ อีเมล:</label>
+                    <input type="text" id="login_username_email" name="username_email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login_password">รหัสผ่าน:</label>
+                    <input type="password" id="login_password" name="password" required>
+                </div>
+                <button type="submit" class="main-button">เข้าสู่ระบบ</button>
+            </form>
+
+            <div class="social-login-separator">หรือ</div>
+
+            <div class="social-buttons-group">
+                <a href="javascript:void(0);" class="social-button google" onclick="alert('เชื่อมต่อ Google (ต้องใช้ Backend)');">
+                    <i class="fab fa-google"></i> เข้าสู่ระบบด้วย Google
+                </a>
+                <a href="javascript:void(0);" class="social-button facebook" onclick="alert('เชื่อมต่อ Facebook (ต้องใช้ Backend)');">
+                    <i class="fab fa-facebook-f"></i> เข้าสู่ระบบด้วย Facebook
+                </a>
+            </div>
+
+            <div class="toggle-form-link">
+                ยังไม่มีบัญชี? <a href="#" onclick="showRegisterForm(); return false;">สมัครสมาชิกที่นี่</a>
+            </div>
+        </div>
+
+        <div id="registerForm" class="form-section">
+            <h1>สมัครสมาชิก</h1>
+            <form action="process_register.php" method="POST">
+                <div class="form-group">
+                    <label for="reg_username">ชื่อผู้ใช้:</label>
+                    <input type="text" id="reg_username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg_email">อีเมล:</label>
+                    <input type="email" id="reg_email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg_password">รหัสผ่าน:</label>
+                    <input type="password" id="reg_password" name="password" required>
+                </div>
+                 <div class="form-group">
+                    <label for="reg_confirm_password">ยืนยันรหัสผ่าน:</label>
+                    <input type="password" id="reg_confirm_password" name="confirm_password" required>
+                </div>
+                <button type="submit" class="main-button">สมัครสมาชิก</button>
+            </form>
+
+            <div class="social-login-separator">หรือ</div>
+
+            <div class="social-buttons-group">
+                <a href="javascript:void(0);" class="social-button google" onclick="alert('เชื่อมต่อ Google (ต้องใช้ Backend)');">
+                    <i class="fab fa-google"></i> สมัครด้วย Google
+                </a>
+                <a href="javascript:void(0);" class="social-button facebook" onclick="alert('เชื่อมต่อ Facebook (ต้องใช้ Backend)');">
+                    <i class="fab fa-facebook-f"></i> สมัครด้วย Facebook
+                </a>
+            </div>
+
+            <div class="toggle-form-link">
+                มีบัญชีอยู่แล้ว? <a href="#" onclick="showLoginForm(); return false;">เข้าสู่ระบบที่นี่</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const authContainer = document.getElementById('authContainer');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+
+        function setContainerHeight(formElement) {
+            // ตั้งค่าความสูงของ container ให้พอดีกับฟอร์มที่กำลังแสดง
+            // ใช้ setTimeout เพื่อให้แน่ใจว่า DOM ถูก render ก่อนคำนวณความสูง
+            setTimeout(() => {
+                authContainer.style.height = formElement.scrollHeight + 'px';
+            }, 50); // เพิ่ม delay เล็กน้อย
+        }
+
+        function showLoginForm() {
+            loginForm.classList.add('active');
+            registerForm.classList.remove('active');
+            setContainerHeight(loginForm);
+            updateTitle('เข้าสู่ระบบ');
+        }
+
+        function showRegisterForm() {
+            registerForm.classList.add('active');
+            loginForm.classList.remove('active');
+            setContainerHeight(registerForm);
+            updateTitle('สมัครสมาชิก');
+        }
+
+        function updateTitle(title) {
+            const h1Element = authContainer.querySelector('h1');
+            if (h1Element) {
+                h1Element.textContent = title;
+            }
+            document.title = title + ' / สมัครสมาชิก';
+        }
+
+        // แสดงฟอร์มล็อกอินเมื่อโหลดหน้าครั้งแรก
+        document.addEventListener('DOMContentLoaded', () => {
+            showLoginForm();
+        });
+
+        // ปรับความสูง container เมื่อหน้าจอถูกปรับขนาด (resize)
+        window.addEventListener('resize', () => {
+            if (loginForm.classList.contains('active')) {
+                setContainerHeight(loginForm);
+            } else if (registerForm.classList.contains('active')) {
+                setContainerHeight(registerForm);
+            }
+        });
+    </script>
+</body>
+</html>
